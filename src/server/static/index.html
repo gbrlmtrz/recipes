@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="es_ES">
+<head>
+	<meta charset="utf-8">
+	<title>Modificar productos</title>
+	<base href="/" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+	<meta name="theme-color" content="#454d55">
+	<link rel="shortcut icon" href="favicon.ico" />
+	<link rel="apple-touch-icon" href="favicon.ico" />
+	<link rel="icon" type="image/x-icon" href="favicon.ico"/>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col p-0 table-responsive">
+				<table class="table table-dark table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>Nombre</th>
+							<th>Categoría</th>
+							<th>Eliminar</th>
+						</tr>
+					</thead>
+					<tbody id="rows">
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div class="form-group">
+					<label for="pageControl">Página</label>
+					<select id="pageControl" class="form-control btn btn-info"></select>
+				</div>
+			<div>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+	
+		window.ingredients = {
+			"meats": "Carnes",
+			"processedMeats": "Carnes procesadas",
+			"meatAlternatives": "Alternativas a la carne",
+			"poultry": "Aves/huevos",
+			"pork": "Cerdo",
+			"veggies": "Vegetales",
+			"carbs": "Carbohidratos",
+			"herbs": "Hierbas",
+			"spices": "Especias",
+			"condiments": "Condimentos",
+			"seasoning": "Aderezos",
+			"beans": "Leguminosas",
+			"dairy": "Lacteos",
+			"dairyAlternative": "Alternativos a lacteos",
+			"fish": "Peces",
+			"seafood": "Comida de mar",
+			"fatsAndOils": "Grasas y aceites",
+			"alcohol": "Licores",
+			"fruits": "Frutas",
+			"dryFruits": "Frutos secos y nueces",
+			"cereals": "Cereales",
+			"beverage": "Bebidas",
+			"water": "Agua",
+			"sugar": "Azucares",
+			"nonSugarSweeteners": "Endulcorantes (no azucar)"
+		};
+	
+	
+		window.addOptions = function(select, item){
+		
+			let placeholder = document.createElement("option");
+			placeholder.disabled = true;
+			placeholder.textContent = "Elige una opción";
+			if(!item.type)
+				placeholder.selected = true;
+				
+			select.appendChild(placeholder);
+				
+				
+			for(let key in window.ingredients){
+				let op = document.createElement("option");
+				op.textContent = window.ingredients[key];
+				op.value = key;
+				op.selected = key == item.type;
+				select.appendChild(op);
+			}
+		};
+		
+		window.deleteIngredient = function(item, tr){
+			let url = new URL(window.location.href + 'ingredients/id/' + item._id);
+			
+			fetch(url, {
+				method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+				mode: 'cors', // no-cors, cors, *same-origin
+				cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+				credentials: 'same-origin', // include, *same-origin, omit
+				headers: {
+					'Content-Type' : 'application/json',
+					'Authorization' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDJiYzQ0OTBlNDU0ZjE0MTg4ZjZlY2MiLCJpYXQiOjE1NjMyNTgwODUsImV4cCI6MzE1ODA1MjE3MH0.Xm-AQK8Mo-G0u3mAsXGVoYANGsKZT7nC_IprYPAWCY4'
+				},
+				redirect: 'follow', // manual, *follow, error
+				referrer: 'no-referrer' // no-referrer, *client
+			})
+			.then(function(response){
+				if(response.status == 200)
+					return response.json();
+				else
+					throw response;
+			})
+			.then(function(response){
+				if(response.success){
+					window.targetNode.removeChild(tr);
+				}else{
+					tr.classList.remove("bg-success");
+					tr.classList.add("bg-warning");
+				}
+			})
+			.catch(function(){
+				alert("Error al actualizar producto! " + item.translations[0].name);
+			});
+		};
+		
+		window.updateIngredient = function(newVal, item, tr){
+			
+			let url = new URL(window.location.href + 'ingredients/id/' + item._id);
+			
+			fetch(url, {
+				method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+				mode: 'cors', // no-cors, cors, *same-origin
+				cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+				credentials: 'same-origin', // include, *same-origin, omit
+				headers: {
+					'Content-Type' : 'application/json',
+					'Authorization' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDJiYzQ0OTBlNDU0ZjE0MTg4ZjZlY2MiLCJpYXQiOjE1NjMyNTgwODUsImV4cCI6MzE1ODA1MjE3MH0.Xm-AQK8Mo-G0u3mAsXGVoYANGsKZT7nC_IprYPAWCY4'
+				},
+				redirect: 'follow', // manual, *follow, error
+				referrer: 'no-referrer', // no-referrer, *client
+				body: JSON.stringify({type : newVal}), // body data type must match "Content-Type" header
+			})
+			.then(function(response){
+				if(response.status == 200)
+					return response.json();
+				else
+					throw response;
+			})
+			.then(function(response){
+				if(response.success){
+					tr.classList.remove("bg-warning");
+					tr.classList.add("bg-success");
+				}else{
+					tr.classList.remove("bg-success");
+					tr.classList.add("bg-warning");
+				}
+			})
+			.catch(function(){
+				alert("Error al actualizar producto! " + item.translations[0].name);
+			});
+		};
+	
+		window.parseResponse = function(items){
+		
+			while (window.targetNode.firstChild) {
+				window.targetNode.removeChild(window.targetNode.firstChild);
+			}
+			
+			
+			for(let key in items){
+				let item = items[key];
+				
+				let tr = document.createElement("tr");
+				let name = document.createElement("td");
+				name.textContent = item.translations[0].name;
+				
+				name.appendChild(document.createElement("br"));
+				let small = document.createElement("small");
+				small.textContent = item.translations[1].name;
+				small.classList.add("text-muted");
+				name.appendChild(small);
+				
+				
+				tr.appendChild(name);
+				
+				
+				
+				let select = document.createElement("select");
+				select.value = item.type;
+				select.classList.add("form-control");
+				select.classList.add("btn");
+				select.classList.add("btn-primary");
+				select.addEventListener("change", function(){
+					window.updateIngredient(this.value, item, tr);
+				});
+				
+				window.addOptions(select, item);
+				
+				let optionColumn = document.createElement("td");
+				optionColumn.appendChild(select);
+				tr.appendChild(optionColumn);
+				
+				let deleteButton = document.createElement("button");
+				deleteButton.textContent = "Eliminar";
+				deleteButton.type = "button";
+				deleteButton.classList.add("btn");
+				deleteButton.classList.add("btn-block");
+				deleteButton.classList.add("btn-danger");
+				deleteButton.addEventListener("click", function(){
+					window.deleteIngredient(item, tr);
+				});
+				
+				let deleteCol = document.createElement("td");
+				deleteCol.appendChild(deleteButton);
+				tr.appendChild(deleteCol);
+				window.targetNode.appendChild(tr);
+			}
+		};
+	
+		window.boot = function(page = 0, limit = 100){
+			let url = new URL(window.location.href + 'ingredients/search');
+			let params = {
+				$start: page * limit,
+				$limit: limit
+			};
+			Object.keys(params).forEach(function(key){url.searchParams.append(key, params[key])})
+			fetch(new Request(url, {method: 'GET'}))
+			.then(function(response){
+				if(response.status == 200)
+					return response.json();
+				else
+					throw new Error(response);
+			})
+			.then(function(response){
+				window.parseResponse(response.items);
+				
+				while (window.pageSelect.firstChild) {
+					window.pageSelect.removeChild(window.pageSelect.firstChild);
+				}
+				
+				let nPages = response.total / limit;
+				for(let i = 0; i < nPages; i++){
+					let op = document.createElement("option");
+					op.value = i;
+					op.textContent = (i+1)+"";
+					op.selected = i == page;
+					window.pageSelect.appendChild(op);
+				}
+				
+				
+			})
+			.catch(function(e){
+				console.log(e);
+				alert("Error de conexión");
+			})
+		};
+		
+		window.targetNode = document.getElementById("rows");
+		window.pageSelect = document.getElementById("pageControl");
+		
+		window.pageSelect.addEventListener("change", function(){
+		
+			window.boot(parseInt(this.value), 100);
+		});		
+				
+				
+		window.boot(0, 100);
+	
+	</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+module.exports = {
+	langs : ["da", "nl", "en", "fi", "fr", "de", "hu", "it", "nb", "pt", "ro", "ru", "es", "sw", "tr"],
+	plateType : ["dessert", "soup", "entree", "apperitizer", "salad", "beverages", "cocktail"],
+	mealType : ["breakfast", "brunch", "lunch", "snack", "dinner"],
+	units : ["gram", "unit", "tablespoon", "teaspoon", "cup"],
+	ingredientType : [
+		"meats",
+		"processedMeats",
+		"meatAlternatives",
+		"poultry",
+		"pork",
+		"veggies",
+		"carbs",
+		"herbs",
+		"spices",
+		"condiments",
+		"beans",
+		"dairy",
+		"dairyAlternative",
+		"fish",
+		"seafood",
+		"fatsAndOils",
+		"seasoning",
+		"alcohol",
+		"fruits",
+		"dryFruits",
+		"cereals",
+		"beverage",
+		"water",
+		"sugar",
+		"nonSugarSweeteners"
+	]
+};

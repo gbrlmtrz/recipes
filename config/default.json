@@ -1,0 +1,11 @@
+{
+	"devMode": true,
+	"Users": {
+		"JWTSecret" : "recipes1991",
+		"JWTLifeInDays" : 365
+	},
+	"mongoAtlas" : {
+		"dbName" : "recipes",
+		"url" : "mongodb+srv:\/\/recipeuser:5gjgzHoVzZ8GInlY@cluster0-2umqj.mongodb.net/test?retryWrites=true&w=majority"
+	}
+}

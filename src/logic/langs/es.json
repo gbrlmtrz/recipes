@@ -1,0 +1,79 @@
+{
+	"authWrongEmailOrPassword":"E-mail o contrasena incorrecta",	
+	"invalidID":"ID invalido",
+	"searchError":"Error al ejecutar busqueda",
+	"emptyBodyError":"Haz enviado un cuerpo vacio",
+	"insertError":"Error al insertar",
+	"removeError":"Error al eliminar",
+	"nothingToRemove":"Nada por eliminar",
+	"updateError":"Error al actualizar",
+	"searchNoResults":"La busqueda no arrojo resultados",
+	"invalidToken":"Token invalido",
+	"fileMustBeSent":"Debes enviar los archivos",
+	"fileUploadError":"Error al subir archivos",
+	"methodNotDefined":"Metodo no definido",
+	
+	"auth" : {
+		"wrongEmailOrPassword" : "E-mail o contraseña incorrecta"
+	},
+	
+	"users" : {
+		"encryptError" : "Error al encriptar",
+		"compareHashError" : "Error al comparar hash",
+		"pleaseSendAValidToken" : "Por favor envia un token valido",
+		"verifyError" : "Error de verificación",
+		"expiredToken" : "Token expirado",
+		"invalidToken" : "Token invalido",
+		"pleaseRenewToken" : "Por favor, vuelve a ingresar",
+		"handleRequired" : "Debes enviar tu handle",
+		"handleAlreadyRegistered" : "El handle que enviaste ya esta en uso",
+		"mailAlreadyRegistered" : "El e-mail que enviaste ya esta registrado",
+		"mailRequired" : "Debes enviar tu e-mail",
+		"passwordRequired": "Debes enviar tu contraseña de al menos 8 caracteres",
+		"nameRequired": "Debes enviar tu nombre",
+		"privRequired": "Debes enviar el privilegio del usuario"
+	},
+	
+	"recipes" : {
+		"ingredientsRequired" : "Debes enviar la lista de ingredients",
+		"quantityRequired" : "Debes enviar la cantidad del ingrediente",
+		"unitRequired" : "Debes enviar la unidad del ingrediente",
+		"ingredientRequired" : "Debes enviar el ingrediente",
+		"timeRequired" : "Debes enviar el tiempo de preparación",
+		"portionsRequired" : "Debes enviar la porciones resultantes de la receta",
+		"plateTypeRequired" : "Debes enviar el tipo de plato",
+		"mealTypeRequired" : "Debes enviar el tipo de comida",
+		"levelRequired" : "Debes enviar el nivel de dificultad de la receta",
+		"nameRequired" : "Debes enviar el titulo de la receta",
+		"languageRequired" : "Debes enviar el lenguaje de la receta",
+		"recipeRequired" : "Debes enviar el texto de la receta"
+	},
+	
+	"ingredients" : {
+		"caloriesRequired" : "Debes enviar las calorias por gramo en kcal",
+		"totalFat" : "Debes enviar la grasa total por gramo en gramos",
+		"saturatedFat" : "Debes enviar la grasa saturada por gramo en gramos",
+		"cholesterol" : "Debes enviar el colesterol por gramo en miligramos",
+		"sodium" : "Debes enviar el sodio por gramo en miligramos",
+		"totalCarbohydrate" : "Debes enviar los carbohidratos por gramo en gramos",
+		"dietaryFiber" : "Debes enviar la fibra por gramo en gramos",
+		"sugars" : "Debes el azucar por gramo en gramos",
+		"protein" : "Debes la proteina por gramo en gramos",
+		"potassium" : "Debes el potasio por gramo en miligramos",
+		"nameRequired" : "Debes enviar el nombre del ingrediente",
+		"languageRequired" : "Debes enviar el lenguaje del nombre",
+		"typeRequired" : "Debes enviar el tipo del ingrediente",
+		"gramToLiterRequired" : "Debes enviar la relación entre gramos y litros de este ingrediente"
+	},
+	
+	"diets" : {
+		"nameRequired" : "Debes enviar el nombre de la dieta",
+		"languageRequired" : "Debes enviar el lenguaje del nombre"
+	},
+	
+	"cousines" : {
+		"nameRequired" : "Debes enviar el nombre de la cocina",
+		"languageRequired" : "Debes enviar el lenguaje del nombre"
+	}
+	
+}
