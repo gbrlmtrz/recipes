@@ -102,7 +102,8 @@
 					'Authorization' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDJiYzQ0OTBlNDU0ZjE0MTg4ZjZlY2MiLCJpYXQiOjE1NjMyNTgwODUsImV4cCI6MzE1ODA1MjE3MH0.Xm-AQK8Mo-G0u3mAsXGVoYANGsKZT7nC_IprYPAWCY4'
 				},
 				redirect: 'follow', // manual, *follow, error
-				referrer: 'no-referrer' // no-referrer, *client
+				referrer: 'no-referrer',
+				body: JSON.stringify({}) // no-referrer, *client
 			})
 			.then(function(response){
 				if(response.status == 200)
@@ -138,7 +139,7 @@
 				},
 				redirect: 'follow', // manual, *follow, error
 				referrer: 'no-referrer', // no-referrer, *client
-				body: JSON.stringify({type : newVal}), // body data type must match "Content-Type" header
+				body: JSON.stringify({type : newVal}) // body data type must match "Content-Type" header
 			})
 			.then(function(response){
 				if(response.status == 200)
