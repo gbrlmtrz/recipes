@@ -16,7 +16,11 @@ class Recipes extends Base{
 			this.schema.cousine._$linkedWith = i.instance;
 			return _requester("Diets")
 		})
-		.then( i => this.schema.diets._$linkedWith = i.instance )
+		.then( i => { 
+			this.schema.diets._$linkedWith = i.instance;
+			return _requester("Utensils")
+		})
+		.then( i => this.schema.utensils._$linkedWith = i.instance)
 		.catch(e => { throw e });
 	}
 	
@@ -90,8 +94,10 @@ class Recipes extends Base{
 	
 	preInsert(data = {}, lang){
 		return new Promise((resolve, reject) => {
+			
 			this.checkIngredients(data, lang)
-			.then(async () => {				
+			.then( data => this.checkDiets(data, lang))
+			.then(async () => {
 			
 				let n, r;
 				do{
@@ -125,7 +131,8 @@ class Recipes extends Base{
 		data.totalProtein = 0;
 		data.totalPotassium = 0;
 	
-		return this.checkIngredients(data, lang);
+		return this.checkIngredients(data, lang)
+		.then(data => this.checkDiets(data, lang));
 	}
 	
 }

@@ -10,7 +10,7 @@ module.exports = {
 		"poultry",
 		"pork",
 		"veggies",
-		"carbs",
+		"mushrooms",
 		"herbs",
 		"spices",
 		"condiments",
@@ -30,4 +30,4 @@ module.exports = {
 		"sugar",
 		"nonSugarSweeteners"
 	]
-};
+}; 

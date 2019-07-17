@@ -25,7 +25,7 @@ const searchRoute = async function(Entity, req, reply){
 			return;
 		}
 		
-		const items = await Entity.doSelectFull(req.query, req.query.$order, req.query.$start, req.query.$limit, req.query.$projection, req.lang);
+		const items = await Entity.doSelectFull(req.query, [["_id", 1]], req.query.$start, req.query.$limit, req.query.$projection, req.lang);
 		
 		if(items.success){
 			items.total = count.item;
@@ -152,7 +152,7 @@ const functions = {
 				
 				reply.send(await Entity.doRemove(query, req.lang));
 			}catch(e){
-				errorHandler(e, req, reply, "updateError");
+				errorHandler(e, req, reply, "removeError");
 			}
 		}
 	},

@@ -293,8 +293,6 @@ class Base extends Database{
 				this.select(find, [], -1, -1, {}, lang)
 				.then(items => {
 					
-					console.log(items);
-					
 					if(!items.success)
 						return new Response(false, lang.searchError);
 					
@@ -320,7 +318,7 @@ class Base extends Database{
 		return res;
 	}
 	
-	async doSelectFull(body = {}, order = [], skip = -1, limit = -1, projection = {}, lang = Lang){
+	async doSelectFull(body = {}, order = [_id, 1], skip = -1, limit = -1, projection = {}, lang = Lang){
 		
 		let data = await this.makeFind(body);
 		

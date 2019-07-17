@@ -24,6 +24,16 @@ const EntitySchema = {
 			_$filter: "objectid"
 		}
 	},
+	utensils : {
+		type : "array",
+		_$searchable : true,
+		_$insertable : true,
+		_$updateable : true,
+		items : {
+			type : "string",
+			_$filter: "objectid"
+		}
+	},
 	cousine: {
 		type: "string",
 		_$filter: "objectid",
@@ -56,6 +66,24 @@ const EntitySchema = {
 				}
 			}
 		}
+	},
+	upc : {
+		type : "string",
+		minLength : 10,
+		maxLength : 14,
+		_$index : 1,
+		_$insertable : true,
+		_$updateable : true,
+		_$searchable : true
+	},
+	gtin : {
+		type : "string",
+		minLength : 8,
+		maxLength : 14,
+		_$index : 1,
+		_$insertable : true,
+		_$updateable : true,
+		_$searchable : true
 	},
 	time : {
 		type : "number",
