@@ -1,5 +1,5 @@
 const transformer = require('./_transformer');
-const objectCopy  = require("fast-copy").default;
+const objectCopy  = require("fast-copy");
 const { langs, ingredientType } = require('./_enum');
 
 const EntitySchema = {
@@ -80,6 +80,31 @@ const EntitySchema = {
 		_$insertable : true,
 		_$updateable : true,
 		_$insertRequired: "gramToLiterRequired"
+	},
+	upc : {
+		type : "string",
+		minLength : 10,
+		maxLength : 14,
+		_$index : 1,
+		_$insertable : true,
+		_$updateable : true,
+		_$searchable : true
+	},
+	gtin : {
+		type : "string",
+		minLength : 8,
+		maxLength : 14,
+		_$index : 1,
+		_$insertable : true,
+		_$updateable : true,
+		_$searchable : true
+	},
+	generic : {
+		type : "string",
+		_$filter : "objectid",
+		_$insertable : true,
+		_$updateable : true,
+		_$searchable : true
 	},
 	type : {
 		type : "string",

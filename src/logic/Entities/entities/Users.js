@@ -8,7 +8,7 @@ const argon2 = require('argon2');
 class Users extends Base{
 	
 	constructor(){
-		super("users", EntitySchema);
+		super("users", EntitySchema, 24 * 60 * 60);
 	}
 	
 	isAdmin(user){
@@ -104,16 +104,12 @@ class Users extends Base{
 		data.issuedAfter = Date.now();
 		
 		if(!data.hasOwnProperty("password"))
-			return Promise.resolve(new Response(true));
+			return Promise.resolve(new Response(true, data));
 		
-	
-		return new Promise((resolve, reject) => {
-			this.hashPass(data.password, lang)
-			.then(pass => {
-				data.password = pass;
-				resolve(new Response(true));
-			})
-			.catch(reject);
+		return this.hashPass(data.password, lang)
+		.then(pass => {
+			data.password = pass;
+			return new Response(true, data);
 		});
 	}
 	
@@ -122,14 +118,11 @@ class Users extends Base{
 		if(!data.hasOwnProperty("password"))
 			return Promise.resolve(new Response(true));
 		
-		return new Promise((resolve, reject) => {
-			this.hashPass(data.password, lang)
-			.then(pass => {
-				data.password = pass;
-				data.issuedAfter = Date.now();
-				resolve(new Response(true));
-			})
-			.catch(reject);
+		return this.hashPass(data.password, lang)
+		.then(pass => {
+			data.password = pass;
+			data.issuedAfter = Date.now();
+			return new Response(true, data);
 		});
 	}
 	
@@ -137,17 +130,12 @@ class Users extends Base{
 		if(!response.success || !data.hasOwnProperty("password"))
 			return super.postUpdate(response, oldBody, data, query, lang);
 		
-		return new Promise((resolve, reject) => {
-			this.getJWT({_id : oldBody._id}, config.get("Users.JWTLifeInDays"), lang)
-			.then(token => {
-				response.token = token;
-				response.expires = parseInt((Date.now() / 1000) + config.get("Users.JWTLifeInDays") * 24 * 60 * 60);
-				return super.postUpdate(response, oldBody, data, query, lang);
-			})
-			.then(resolve)
-			.catch(reject);
+		return this.getJWT({_id : oldBody._id}, config.get("Users.JWTLifeInDays"), lang)
+		.then(token => {
+			response.token = token;
+			response.expires = parseInt((Date.now() / 1000) + config.get("Users.JWTLifeInDays") * 24 * 60 * 60);
+			return super.postUpdate(response, oldBody, data, query, lang);
 		});
-		
 	}
 	
 }

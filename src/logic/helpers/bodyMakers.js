@@ -3,7 +3,7 @@ const steed = require('./steedz')();
 const UUIDValidate = require('uuid-validate');
 const { ObjectID } = require('mongodb');
 const Isemail = require('isemail');
-const objectCopy  = require("fast-copy").default;
+const objectCopy  = require("fast-copy");
 
 const milesToRadian = (miles) => {
 	return parseFloat(miles) / 3959;
@@ -124,12 +124,7 @@ const VPs = {
 		
 		makeArrayData(schema, value)
 		.then(results => {
-			
-			if(results.length > 0)
-				cb(null, results);
-			else
-				cb(null, null);
-			
+			cb(null, results);
 		})
 		.catch( e => {
 			console.log(key, e);
@@ -491,7 +486,7 @@ function applyFilter(key, cb){
 	Promise.all(promises)
 	.then(results => cb(null, results))
 	.catch(e => {
-		console.log(e);
+		console.log("af", e);
 		cb(null, null);
 	});
 };
@@ -519,23 +514,29 @@ async function applyActions(key, cb){
 	cb(null, newObject);
 }
 
-async function makeArrayData(sch, dat){
-	
+function makeArrayData(sch, dat){
 	const orders = {};
-	const resArray = [];
 	const arrSch = {};
 	
 	for(let key in dat){
 		orders[key] = VPs[sch._$filter || sch.type];
 		arrSch[key] = sch;
 	}
-	
-	const results = await steed.parallel(new ValueState(arrSch, dat), orders);
-	for(let key in results)
-		if(results[key] !== null)
-			resArray.push(results[key]);
-
-	return resArray;
+		
+	return steed.parallel(new ValueState(arrSch, dat), orders)
+	.then((results) => {
+		const resArray = [];
+		
+		for(let key in results){
+			if(results[key] !== null){
+				resArray.push(results[key]);
+			}else{
+				reject();
+				return;
+			}
+		}
+		return resArray;
+	})
 }
 
 async function makeData(sch, data){

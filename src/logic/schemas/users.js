@@ -1,5 +1,5 @@
 const transformer = require('./_transformer');
-const objectCopy  = require("fast-copy").default;
+const objectCopy  = require("fast-copy");
 
 const EntitySchema = {
 	_id: {

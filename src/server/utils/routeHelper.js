@@ -4,7 +4,6 @@ const { ObjectID } = require("mongodb");
 
 const errorHandler = function(e, req, reply, errorKey){
 	console.log(e);
-	
 	if(e instanceof Response)
 		reply.send(e);
 	else
@@ -92,7 +91,7 @@ const functions = {
 					return;
 				}
 				
-				reply.send(await Entity.doUpdate(oldBody.item, req.body, query, req.lang));
+				reply.send(await Entity.doUpdate(oldBody.item, req.body, req.lang));
 			}catch(e){
 				errorHandler(e, req, reply, "updateError");
 			}
@@ -111,7 +110,7 @@ const functions = {
 					return;
 				}
 				
-				reply.send(await Entity.doUpdate(oldBody.item, req.body, query, req.lang));
+				reply.send(await Entity.doUpdate(oldBody.item, req.body, req.lang));
 			}catch(e){
 				errorHandler(e, req, reply, "updateError");
 			}
@@ -129,7 +128,7 @@ const functions = {
 					return;
 				}
 				
-				reply.send(await Entity.doUpdate(oldBody.item, req.body, query, req.lang));
+				reply.send(await Entity.doUpdate(oldBody.item, req.body, req.lang));
 			}catch(e){
 				errorHandler(e, req, reply, "updateError");
 			}

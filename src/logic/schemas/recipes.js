@@ -1,5 +1,5 @@
 const transformer = require('./_transformer');
-const objectCopy  = require("fast-copy").default;
+const objectCopy  = require("fast-copy");
 
 const { langs, plateType, mealType, units } = require('./_enum');
 
@@ -24,17 +24,50 @@ const EntitySchema = {
 			_$filter: "objectid"
 		}
 	},
+	ingredientTypes : {
+		type : "array",
+		_$searchable : true,
+		_$private : true,
+		items : {
+			type : "string",
+			_$filter: "objectid"
+		}
+	},
+	ingredientCount : {
+		type : "number",
+		_$private : true,
+		_$searchable : true,
+	},
+	utensilCount : {
+		type : "number",
+		_$private : true,
+		_$searchable : true
+	},
+	enabled : {
+		type : "boolean",
+		_$index : 1,
+		_$searchable : true
+	},
 	utensils : {
 		type : "array",
 		_$searchable : true,
 		_$insertable : true,
 		_$updateable : true,
+		_$insertRequired : "utensilRequired",
+		_$linkedWithMes: "utensilNotFound",
 		items : {
 			type : "string",
 			_$filter: "objectid"
 		}
 	},
 	cousine: {
+		type: "string",
+		_$filter: "objectid",
+		_$insertable : true,
+		_$updateable : true,
+		_$searchable : true
+	},
+	basedOn: {
 		type: "string",
 		_$filter: "objectid",
 		_$insertable : true,
@@ -67,24 +100,6 @@ const EntitySchema = {
 			}
 		}
 	},
-	upc : {
-		type : "string",
-		minLength : 10,
-		maxLength : 14,
-		_$index : 1,
-		_$insertable : true,
-		_$updateable : true,
-		_$searchable : true
-	},
-	gtin : {
-		type : "string",
-		minLength : 8,
-		maxLength : 14,
-		_$index : 1,
-		_$insertable : true,
-		_$updateable : true,
-		_$searchable : true
-	},
 	time : {
 		type : "number",
 		_$index : 1,
@@ -101,45 +116,51 @@ const EntitySchema = {
 		_$searchable : true,
 		_$insertRequired: "portionsRequired"
 	},
-	totalCal : {
-		type : "number",
-		_$searchable : true
-	},
-	totalFat : {
-		type : "number",
-		_$searchable : true
-	},
-	totalSaturateFat : {
-		type : "number",
-		_$searchable : true
-	},
-	totalCholesterol : {
-		type : "number",
-		_$searchable : true
-	},
-	totalSodium : {
-		type : "number",
-		_$searchable : true
-	},
-	totalCarbohydrate : {
-		type : "number",
-		_$searchable : true
-	},
-	totalDietaryFiber : {
-		type : "number",
-		_$searchable : true
-	},
-	totalSugars : {
-		type : "number",
-		_$searchable : true
-	},
-	totalProtein : {
-		type : "number",
-		_$searchable : true
-	},
-	totalPotassium : {
-		type : "number",
-		_$searchable : true
+	nf : {
+		type : "object",
+		default: {},
+		properties : {
+			totalCal : {
+				type : "number",
+				_$searchable : true
+			},
+			totalFat : {
+				type : "number",
+				_$searchable : true
+			},
+			totalSaturatedFat : {
+				type : "number",
+				_$searchable : true
+			},
+			totalCholesterol : {
+				type : "number",
+				_$searchable : true
+			},
+			totalSodium : {
+				type : "number",
+				_$searchable : true
+			},
+			totalCarbohydrate : {
+				type : "number",
+				_$searchable : true
+			},
+			totalDietaryFiber : {
+				type : "number",
+				_$searchable : true
+			},
+			totalSugars : {
+				type : "number",
+				_$searchable : true
+			},
+			totalProtein : {
+				type : "number",
+				_$searchable : true
+			},
+			totalPotassium : {
+				type : "number",
+				_$searchable : true
+			}
+		}
 	},
 	plateType : {
 		type : "string",
@@ -165,6 +186,13 @@ const EntitySchema = {
 		_$updateable : true,
 		_$searchable : true,
 		_$insertRequired: "levelRequired"
+	},
+	rating : {
+		type : "number",
+		_$index : 1
+	},
+	totalRates : {
+		type : "number"
 	},
 	friendlyID : {
 		type : "string",
@@ -200,6 +228,12 @@ const EntitySchema = {
 					_$insertable : true,
 					_$updateable : true,
 					_$insertRequired: "recipeRequired"
+				},
+				tags : {
+					type : "array",
+					items : {
+						type : "string"
+					}
 				}
 			}
 		}

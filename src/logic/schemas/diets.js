@@ -1,5 +1,5 @@
 const transformer = require('./_transformer');
-const objectCopy  = require("fast-copy").default;
+const objectCopy  = require("fast-copy");
 const { langs, ingredientType } = require('./_enum');
 
 const EntitySchema = {
@@ -15,19 +15,248 @@ const EntitySchema = {
 		_$private : true,
 		_$searchable : true
 	},
-	maxKal : {
+	nf : {
+		type : "object",
+		_$insertable : true,
+		_$updateable : true,
+		_$searchable : true,
+		default: {},
+		_$insertRequired : "nfRequired",
+		/*required : [
+			"minCal", 
+			"maxCal", 
+			"minFat", 
+			"maxFat", 
+			"minSaturatedFat", 
+			"maxSaturatedFat", 
+			"minCholesterol",
+			"maxCholesterol",
+			"minSodium",
+			"maxSodium",
+			"minCarbohydrate",
+			"maxCarbohydrate",
+			"minDietaryFiber",
+			"maxDietaryFiber",
+			"minSugars",
+			"maxSugars",
+			"minProtein",
+			"maxProtein",
+			"minPotassium",
+			"maxPotassium"
+		],*/
+		properties : {
+			
+			minCal: {
+				type : "number",
+				default: 0,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			},
+			maxCal: {
+				type : "number",
+				default: 99999,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			},
+			minFat: {
+				type : "number",
+				default: 0,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			},
+			maxFat: {
+				type : "number",
+				default: 99999,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			},
+			minSaturatedFat: {
+				type : "number",
+				default: 0,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			},
+			maxSaturatedFat: {
+				type : "number",
+				default: 99999,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			},
+			minCholesterol: {
+				type : "number",
+				default: 0,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			},
+			maxCholesterol: {
+				type : "number",
+				default: 99999,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			},
+			minSodium: {
+				type : "number",
+				default: 0,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			},
+			maxSodium: {
+				type : "number",
+				default: 99999,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			},
+			minCarbohydrate: {
+				type : "number",
+				default: 0,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			},
+			maxCarbohydrate: {
+				type : "number",
+				default: 99999,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			},
+			minDietaryFiber: {
+				type : "number",
+				default: 0,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			},
+			maxDietaryFiber: {
+				type : "number",
+				default: 99999,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			},
+			minSugars: {
+				type : "number",
+				default: 0,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			},
+			maxSugars: {
+				type : "number",
+				default: 99999,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			},
+			minProtein: {
+				type : "number",
+				default: 0,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			},
+			maxProtein: {
+				type : "number",
+				default: 99999,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			},
+			minPotassium: {
+				type : "number",
+				default: 0,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			},
+			maxPotassium: {
+				type : "number",
+				default: 99999,
+				_$insertable : true,
+				_$updateable : true,
+				_$searchable : true
+			}
+	
+		}
+	},
+	
+	minTime : {
 		type : "number",
+		default: 0,
 		_$insertable : true,
 		_$updateable : true,
 		_$searchable : true
 	},
-	minKal : {
+	maxTime : {
 		type : "number",
+		default: 9999,
 		_$insertable : true,
-		_$updateable : true
+		_$updateable : true,
+		_$searchable : true
 	},
-	requiresIngredientType : {
+	requiredUtensil : {
 		type : "array",
+		_$insertable : true,
+		_$updateable : true,
+		_$searchable : true,
+		default: [],
+		items : {
+			type: "string",
+			_$filter: "objectid",
+		}
+	},
+	withoutUtensil : {
+		type : "array",
+		_$insertable : true,
+		_$updateable : true,
+		_$searchable : true,
+		default: [],
+		items : {
+			type: "string",
+			_$filter: "objectid",
+		}
+	},
+	maxUtensils : {
+		type : "number",
+		default: 999999,
+		_$insertable : true,
+		_$updateable : true,
+		_$searchable : true
+	},
+	minUtensils : {
+		type : "number",
+		default: 0,
+		_$insertable : true,
+		_$updateable : true,
+		_$searchable : true
+	},
+	maxIngredients : {
+		type : "number",
+		default: 999999,
+		_$insertable : true,
+		_$updateable : true,
+		_$searchable : true
+	},
+	minIngredients : {
+		type : "number",
+		default: 0,
+		_$insertable : true,
+		_$updateable : true,
+		_$searchable : true
+	},
+	requiredIngredientType : {
+		type : "array",
+		default: [],
 		_$insertable : true,
 		_$updateable : true,
 		_$searchable : true,
@@ -38,6 +267,7 @@ const EntitySchema = {
 	},
 	withoutIngredientType : {
 		type : "array",
+		default: [],
 		_$insertable : true,
 		_$updateable : true,
 		_$searchable : true,
@@ -48,6 +278,7 @@ const EntitySchema = {
 	},
 	requiredIngredient : {
 		type : "array",
+		default: [],
 		_$insertable : true,
 		_$updateable : true,
 		_$searchable : true,
@@ -58,6 +289,7 @@ const EntitySchema = {
 	},
 	withoutIngredient : {
 		type : "array",
+		default: [],
 		_$insertable : true,
 		_$updateable : true,
 		_$searchable : true,
@@ -91,6 +323,7 @@ const EntitySchema = {
 			}
 		}
 	}
+
 };
 
 const InsertSchema = transformer.create(objectCopy(EntitySchema));

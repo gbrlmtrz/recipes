@@ -2,7 +2,7 @@ const moment = require('moment');
 const Response = require('./_Response');
 const conn = require('../../database');
 const Lang = require('../langs/es.json');
-const objectCopy  = require("fast-copy").default;
+const objectCopy  = require("fast-copy");
 
 class Database{
 	
@@ -40,7 +40,7 @@ class Database{
 				}
 			})
 			.catch(error => {
-				console.log(error);
+				console.log("43", error);
 				reject(new Response(false, lang.insertError));
 			});
 		});
@@ -61,24 +61,39 @@ class Database{
 				}
 			})
 			.catch(error => {
-				console.log(err);
+				console.log(error);
 				reject(new Response(false, lang.insertError));
 			});
 		});
 	}
 	
-	updateOne(query = {}, body = {}, extra = {upsert : true}, lang = Lang){
+	updateOne(query = {}, body = {}, extra = {upsert : true, returnOriginal : false}, lang = Lang){
 		return new Promise((resolve, reject) => {
 			
 			conn.getCollection(this.collection)
-			.then(col => col.updateOne(query, body, extra))
+			.then(col => col.findOneAndUpdate(query, body, extra))
 			.then(res => {
 				
-				if(res.modifiedCount == 1){
-					resolve(new Response(true, body));					
-				}else if(res.upsertedCount == 1){
-					body._id = res.upsertedId;
-					resolve(new Response(true, body));	
+				if(res.ok == 1){
+					resolve(new Response(true, res.value));					
+				}else{
+					reject(new Response(false, lang.updateError));
+				}
+			})
+			.catch(error => {
+				reject(new Response(false, lang.updateError));
+			});
+		});
+	}
+	
+	updateMany(query = {}, body = {}, extra = {upsert : true}, lang = Lang){
+		return new Promise((resolve, reject) => {
+			
+			conn.getCollection(this.collection)
+			.then(col => col.updateMany(query, body, extra))
+			.then(res => {
+				if(res.modifiedCount == res.matchedCount){
+					resolve(new Response(true, res.modifiedCount));					
 				}else{
 					reject(new Response(false, lang.updateError));
 				}
@@ -151,7 +166,7 @@ class Database{
 			if(limit >= 0)
 				options.limit = limit;
 			
-			if(projection.length > 0){
+			if(Object.keys(projection).length > 0){
 				options.projection = projection;
 			}
 			
