@@ -12,6 +12,8 @@ const object = {
 	}
 };
 
+console.log(object);
+
 const eventCounts = {};
 const redisInstances = {};
 
