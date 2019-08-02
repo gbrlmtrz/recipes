@@ -1,7 +1,7 @@
 {
 	"redis": {
 		"port": 6379,
-		"host": "clustercfg.recipes.mbdhet.use1.cache.amazonaws.com",
+		"host": "recipes-0002-001.recipes.mbdhet.use1.cache.amazonaws.com",
 		"password": "00.401278000Pancho",
 		"tls" : {}
 	}
