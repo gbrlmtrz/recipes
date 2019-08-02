@@ -1,3 +1,7 @@
 {
-
+	"redis": {
+		"port": 6379,
+		"host": "master.recipes.14hhgn.usw1.cache.amazonaws.com",
+		"tls" : {}
+	}
 }

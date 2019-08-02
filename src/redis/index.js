@@ -1,10 +1,15 @@
 'use strict';
 const config = require('config');
 const Redis = require('ioredis');
+const targetError = "READONLY";
+
 const object = {
-	port: config.get("redis.port"),	// Redis port
-	host: config.get("redis.host"),	// Redis host
-	family: 4						// 4 (IPv4) or 6 (IPv6)
+	...config.get("redis"), 
+	reconnectOnError: function(err) {
+		if (err.message.slice(0, targetError.length) === targetError) {
+		  return true; 
+		}
+	}
 };
 
 const eventCounts = {};
