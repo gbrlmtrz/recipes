@@ -539,7 +539,7 @@ function makeArrayData(sch, dat){
 	})
 }
 
-async function makeData(sch, data){
+function makeData(sch, data){
 	const orders = {};
 	
 	const dat = objectCopy(data);
@@ -550,12 +550,14 @@ async function makeData(sch, data){
 		}
 	}
 	
-	const results = await steed.parallel(new ValueState(sch, dat), orders);
-	for(let key in results)
-		if(results[key] === null)
-			delete results[key];
-	
-	return results;
+	return steed.parallel(new ValueState(sch, dat), orders)
+	.then((results) => {
+		for(let key in results)
+			if(results[key] === null)
+				delete results[key];
+		
+		return results;
+	});	
 }
 
 async function makeFind(sch, dat){

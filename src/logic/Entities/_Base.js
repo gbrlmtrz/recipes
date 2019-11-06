@@ -291,8 +291,12 @@ class Base extends Database{
 	}
 	
 	doInsert(body = {}, lang = Lang){
+
+		const s = Date.now();
 		return this.makeData(body)
-		.then(data => this.preInsert(data, lang))
+		.then(data => { 
+			console.log("total", s, Date.now(), Date.now() - s);
+			return this.preInsert(data, lang);})
 		.then(preInsertR => this.checkFieldsForInsert(preInsertR.item, lang, this.schema))
 		.then(checkR => {
 			checkR.item.inserted = Date.now();

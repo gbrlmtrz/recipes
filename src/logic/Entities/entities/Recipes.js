@@ -240,7 +240,7 @@ class Recipes extends Base{
 			.then(async (d) => {
 				let n, r;
 				do{
-					n = nanoid();
+					n = nanoid(10);
 					try{
 						r = await this.count({ friendlyID : n });
 					}catch(e){
