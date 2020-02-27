@@ -34,6 +34,8 @@ Ingredients.select({ $text : {$search : "atun"} })
 .then(console.log)
 .catch(console.error);*/
 
+console.log("ignore fast!");
+
 const server = require("./src/server");
 
 server.start();
